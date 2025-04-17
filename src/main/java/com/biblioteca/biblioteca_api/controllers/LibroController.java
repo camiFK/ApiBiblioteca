@@ -16,24 +16,28 @@ public class LibroController {
     private LibroRepository libroRepository;
 
     // Obtener todos los libros
+    @CrossOrigin
     @GetMapping
     public List<Libro> getAllLibros() {
         return libroRepository.findAll();
     }
 
     // Obtener un libro por id
+    @CrossOrigin
     @GetMapping("/{id}")
     public Libro getLibroById(@PathVariable Long id) {
         return libroRepository.findById(id).orElse(null);
     }
 
     // Crear un nuevo libro
+    @CrossOrigin
     @PostMapping
     public Libro createLibro(@RequestBody Libro libro) {
         return libroRepository.save(libro);
     }
 
     // Actualizar un libro
+    @CrossOrigin
     @PutMapping("/{id}")
     public Libro updateLibro(@PathVariable Long id, @RequestBody Libro libro) {
         if (libroRepository.existsById(id)) {
@@ -44,6 +48,7 @@ public class LibroController {
     }
 
     @PatchMapping("/{id}")
+    @CrossOrigin
     public Libro updateLibroParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos) {
         return libroRepository.findById(id).map(libro -> {
             campos.forEach((key, value) -> {
@@ -65,6 +70,7 @@ public class LibroController {
 
     // Eliminar un libro
     @DeleteMapping("/{id}")
+    @CrossOrigin
     public void deleteLibro(@PathVariable Long id) {
         libroRepository.deleteById(id);
     }
