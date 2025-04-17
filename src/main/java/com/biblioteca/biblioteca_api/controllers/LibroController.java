@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/libros")
@@ -40,6 +41,26 @@ public class LibroController {
             return libroRepository.save(libro);
         }
         return null;
+    }
+
+    @PatchMapping("/{id}")
+    public Libro updateLibroParcial(@PathVariable Long id, @RequestBody Map<String, Object> campos) {
+        return libroRepository.findById(id).map(libro -> {
+            campos.forEach((key, value) -> {
+                switch (key) {
+                    case "nombre" -> libro.setNombre((String) value);
+                    case "autor" -> libro.setAutor((String) value);
+                    case "estrellas" -> libro.setEstrellas((Double) value);
+                    case "fechaPublicacion" -> libro.setFechaPublicacion((String) value);
+                    case "urlFoto" -> libro.setUrlFoto((String) value);
+                    case "editorial" -> libro.setEditorial((String) value);
+                    case "genero" -> libro.setGenero((String) value);
+                    case "cantPag" -> libro.setCantPag((int) value);
+                    case "idioma" -> libro.setIdioma((String) value);
+                }
+            });
+            return libroRepository.save(libro);
+        }).orElse(null);
     }
 
     // Eliminar un libro
