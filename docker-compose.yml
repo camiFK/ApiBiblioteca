@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.4
+    container_name: mariadb-biblioteca
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./db/biblioteca.sql:/docker-entrypoint-initdb.d/biblioteca.sql
+    restart: unless-stopped
+    
+  dbgate:
+    image: dbgate/dbgate
+    container_name: dbgate
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
