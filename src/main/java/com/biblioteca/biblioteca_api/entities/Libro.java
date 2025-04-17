@@ -3,6 +3,7 @@ package com.biblioteca.biblioteca_api.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "libros")
 public class Libro {
 
     @Id
